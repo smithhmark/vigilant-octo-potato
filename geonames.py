@@ -41,3 +41,8 @@ def parse_line_raw(line):
     assert len(fields) == len(FIELDS)
     return dict(zip(FIELDS, fields))
 
+def read_file_raw(fil):
+    results = []
+    for line in fil:
+        results.append(parse_line_raw(line))
+    return results
