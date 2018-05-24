@@ -42,7 +42,23 @@ def parse_line_raw(line):
     return dict(zip(FIELDS, fields))
 
 def read_file_raw(fil):
+    """take a file object and return a list of raw record dictionaries
+    """
     results = []
     for line in fil:
         results.append(parse_line_raw(line))
     return results
+
+def slice_geo_data(ld):
+    """given a list of raw record dictionaries, pull out geo data, 
+    and convert to floats
+    """
+    float_fields = ["latitude","longitude"]
+    result = []
+    for rec in ld:
+        newr = {}
+        for field in float_fields:
+            newr[field] = float(rec[field])
+        result.append(newr)
+    return result
+

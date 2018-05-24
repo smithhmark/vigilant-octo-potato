@@ -21,6 +21,30 @@ def first_5_data_lines():
 def sample_file(first_5_data_lines):
     return io.StringIO(first_5_data_lines)
 
+@pytest.fixture()
+def sample_raw_record():
+    return {
+            'geonameid': '3039154',
+            'name': 'El Tarter',
+            'asciiname': 'El Tarter',
+            'alternatenames': 'Ehl Tarter,Эл Тартер',
+            'latitude': '42.57952',
+            'longitude': '1.65362',
+            'feature_class': 'P',
+            'feature_code': 'PPL',
+            'country_code': 'AD',
+            'cc2': '',
+            'admin1_code': '02',
+            'admin2_code': '',
+            'admin3_code': '',
+            'admin4_code': '',
+            'population': '1052',
+            'elevation': '',
+            'dem': '1721',
+            'timezone': 'Europe/Andorra',
+            'modification_date': '2012-11-03',
+            }
+
 def test_parse_docs_for_fieldnames():
     fields = geonames.parse_docs_for_fieldnames()
     assert len(fields) == 19
@@ -38,5 +62,14 @@ def test_parse_line_raw(first_data_line):
 
 def test_read_file_raw(sample_file):
     results = geonames.read_file_raw(sample_file)
-
     assert len(results) == 5
+
+def test_slice_geo_data(sample_raw_record):
+    input = [sample_raw_record]
+    result = geonames.slice_geo_data(input)
+    assert len(result) == 1
+    assert len(result[0]) == 2
+    assert "latitude" in result[0]
+    assert "longitude" in result[0]
+    assert isinstance(result[0]["longitude"], float)
+    assert isinstance(result[0]["latitude"], float)
