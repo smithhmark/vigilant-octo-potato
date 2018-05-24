@@ -14,7 +14,7 @@ def emptydb(blankdb):
 
 @pytest.fixture()
 def example_record():
-    return {"id": 1, 
+    return {"geonameid": 1, 
             "name": "Oz",
             "latitude": 26.2,
             "longitude": 3.14159,
@@ -23,12 +23,12 @@ def example_record():
 @pytest.fixture()
 def example_records(example_record):
     recs = [example_record]
-    recs.append({"id": 2, 
+    recs.append({"geonameid": 2, 
             "name": "South Oz",
             "latitude": 16.2,
             "longitude": 3.14159,
             })
-    recs.append({"id": 3, 
+    recs.append({"geonameid": 3, 
             "name": "West Oz",
             "latitude": 26.2,
             "longitude": 13.14159,
@@ -47,7 +47,7 @@ def test_insert_kidrecord(emptydb, example_record):
     cc.execute("select * from kidgeo")
     rows = cc.fetchall()
     assert len(rows) == 1
-    assert rows[0][0] == example_record['id']
+    assert rows[0][0] == example_record['geonameid']
     assert rows[0][1] == example_record['name']
     assert rows[0][2] == example_record['latitude']
     assert rows[0][3] == example_record['longitude']

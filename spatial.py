@@ -21,7 +21,7 @@ class Spatial:
         dists, neighbors = self._tree.query(coq, k)
         res = []
         for ii, nn in enumerate(neighbors):
-            res.append({"dist": dists[ii], "id": self._offset_to_id[nn]})
+            res.append({"dist": dists[ii], "geonameid": self._offset_to_id[nn]})
         return res
 
 AVG_EARTH_RADIUS = 6.3781 * math.pow(10,3) # in km
@@ -50,8 +50,8 @@ def id_offset_mappings(records):
     toid = {}
     tooffset = {}
     for ii, rr in enumerate(records):
-        toid[ii] = rr["id"]
-        tooffset[rr["id"]] = ii
+        toid[ii] = rr["geonameid"]
+        tooffset[rr["geonameid"]] = ii
     return toid, tooffset
 
 def geo_data_from_records(records):

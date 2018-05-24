@@ -20,7 +20,7 @@ def test_data_simple():
 
 @pytest.fixture()
 def test_data():
-    labels = ["id", "name", "latitude", "longitude"]
+    labels = ["geonameid", "name", "latitude", "longitude"]
     tmp = [
             [5391959, "San Francisco", 37.77493, -122.41942],
             [5397765, "South San Francisco", 37.65466, -122.40775],
@@ -45,7 +45,7 @@ def test_lat_long_rad_to_XYZ():
 
 
 def test_mappings():
-    fake_recs = [{"id": ii} for ii in range(100,110)]
+    fake_recs = [{"geonameid": ii} for ii in range(100,110)]
 
     toid, tooffset = spatial.id_offset_mappings(fake_recs)
     for ii in range(10):
@@ -91,8 +91,8 @@ def test_Spatial(test_data):
     #print(results)
     assert len(results) == 2
     assert results[0]["dist"] == 0
-    assert results[0]["id"] == test_data[0]['id']
-    assert results[1]["id"] == test_data[1]['id']
+    assert results[0]["geonameid"] == test_data[0]['geonameid']
+    assert results[1]["geonameid"] == test_data[1]['geonameid']
     assert results[1]["dist"] < 15
     assert results[1]["dist"] > 10
     #_dist_latlon(test_data[0], test_data[1])
@@ -101,10 +101,10 @@ def test_Spatial(test_data):
     #print(results)
     assert len(results) == 3
     assert results[0]["dist"] == 0
-    assert results[0]["id"] == test_data[0]['id']
-    assert results[1]["id"] == test_data[1]['id']
+    assert results[0]["geonameid"] == test_data[0]['geonameid']
+    assert results[1]["geonameid"] == test_data[1]['geonameid']
     assert results[1]["dist"] < 14
     assert results[1]["dist"] > 13
-    assert results[2]["id"] == test_data[2]['id']
+    assert results[2]["geonameid"] == test_data[2]['geonameid']
     assert results[2]["dist"] < 14
     assert results[2]["dist"] > 13
