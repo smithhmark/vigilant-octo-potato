@@ -50,4 +50,17 @@ Should I just find a geo-enabled data-store and load? PostGIS?
  
 ### Service
 After some libraries pass unit tests, some API (probably RESTful) needs to be imagined and developed.
- 
+
+not using a virtual environment, the anaconda python runs this fine...
+
+```shell
+$ python load_db.py
+$ FLASK_APP=service.py python -m flask run
+```
+
+endpoints:
+ * ```/cities``` ...
+ * ```/cities/<geonameid>```
+ * ```/cities/<geonameid>/nearest/<k nearest neighbors>```
+ * ```/cities?name=<name to search for>```
+ * ```/cities?partial_name=<name fragment to search for>```
