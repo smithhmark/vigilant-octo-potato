@@ -24,6 +24,17 @@ Initial objectives:
 Given that the motivation for this task is not PURELY self-driven, how much should I make use of the eco system?
 
 Perhaps, I should start with using lots of existing tools then code my own against interfaces for learning.
+#### Distribution
+I usually use CPython, but using the Andaoconda distribution would give me some additional tools, like a built-ing kdtree...
+
+##### Virtual envs
+I setup my virtual env this way:
+```shell
+$ conda create --name octo
+$ conda install -n octo pip
+$ conda install --file requirements.txt
+```
+
 
 ### Data
 The data seems fairly clean, though there are a variety of characters in non-latin alphabets, so UTF support will be more important than normal.
