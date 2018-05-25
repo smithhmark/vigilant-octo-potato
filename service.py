@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 import db
 import spatial
+import responses
 
 def _setup():
     conn = db.get_connection()
@@ -15,7 +16,7 @@ SPATIAL = _setup()
 
 @app.route('/')
 def home():
-    return "really?"
+    return responses.index_page()
 
 @app.route('/cities/<geonameid>/nearest/<k>')
 def neighbor_cities(geonameid, k):
@@ -47,6 +48,6 @@ def cities(geonameid):
     gid = int(geonameid)
     results = db.find_by_id(conn, gid)
     if len(results) == 1:
-        return repr(results[0])
+        return responses.city_dessc(db.make_city_dict(results[0]))
     else:
         return "cities, {}".format(geonameid)
