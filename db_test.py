@@ -79,3 +79,11 @@ def test_find_by_id(populated_db):
 
     rows = db.find_by_id(populated_db, 14159)
     assert len(rows) == 0
+
+def test_make_city_dict():
+    input = (1, "Oz", 1.0, 2.0)
+    output = db.make_city_dict(input)
+    fields = ["geonameid", "name", "latitude", "longitude"]
+    for ii, ff in enumerate(fields):
+        assert ff in output
+        assert input[ii] == output[ff]

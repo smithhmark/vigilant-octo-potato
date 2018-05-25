@@ -33,6 +33,10 @@ def load_simple(conn, records, commit=True):
     if commit:
         conn.commit()
 
+def make_city_dict(row):
+    fields = ["geonameid", "name", "latitude", "longitude"]
+    return dict(zip(fields, row))
+
 def find_by_name(conn, name):
     sql = """select * from kidgeo
     where name=?"""
