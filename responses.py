@@ -26,13 +26,43 @@ The api is rooted at /cities endpoints include:
     return _html.format(content)
 
 
-def city_dessc(city):
-    content = """
+def _city_desc(city, link_to_city_page=True):
+    link_content = """
+<ul>
+    <li><em>Name</em>: {name}</li>
+    <li><em>geonameid</em>: <a href="/cities/{geonameid}">{geonameid}</a></li>
+    <li><em>Latitude</em>: {latitude}</li>
+    <li><em>Longitude</em>: {longitude}</li>
+</ul>"""
+    nolink_content = """
 <ul>
     <li><em>Name</em>: {name}</li>
     <li><em>geonameid</em>: {geonameid}</li>
     <li><em>Latitude</em>: {latitude}</li>
     <li><em>Longitude</em>: {longitude}</li>
 </ul>"""
-    tmp = content.format(**city)
-    return _html.format(tmp)
+    if link_to_city_page:
+        return link_content.format(**city)
+    else:
+        return nolink_content.format(**city)
+
+def city_desc_page(city):
+    return _html.format(_city_desc(city, False))
+
+def city_list_page(cities):
+    content = """<ol><li>{}</li></ol>"""
+
+    tmp = "</li><li>".join([_city_desc(cc) for cc in cities])
+    return _html.format(content.format(tmp))
+
+def distances_page(distances):
+    content = """<ol><li>{}</li></ol>"""
+
+    _deet = """<ul>
+<li><em>Distance:</em> {dist}</li>
+<li><em>geonameid:</em> <a href="/cities/{geonameid}">{geonameid}</a></li>
+</ul>"""
+    tmp = "</li><li>".join([_deet.format(**dc) for dc in distances])
+    return _html.format(content.format(tmp))
+
+

@@ -1,6 +1,7 @@
 
 from flask import Flask
 from flask import request
+from flask import abort
 
 app = Flask(__name__)
 
@@ -24,7 +25,7 @@ def neighbor_cities(geonameid, k):
     loc = SPATIAL.loc_at_id(gid)
     kk = int(k)
     res = SPATIAL.knn(kk, loc)
-    return repr(res)
+    return responses.distances_page(res)
 
 @app.route('/cities')
 def find_cites():
@@ -37,10 +38,11 @@ def find_cites():
             term = request.args['name']
             results = db.find_by_name(conn, term)
         else:
-            return ""
-        return repr(results)
+            return "I don't understand the request", 400
+        return responses.city_list_page(
+                [db.make_city_dict(cc) for cc in results])
     else:
-        return "not yet implemented"
+        return "not yet implemented", 400
 
 @app.route('/cities/<geonameid>')
 def cities(geonameid):
@@ -48,6 +50,6 @@ def cities(geonameid):
     gid = int(geonameid)
     results = db.find_by_id(conn, gid)
     if len(results) == 1:
-        return responses.city_dessc(db.make_city_dict(results[0]))
+        return responses.city_desc_page(db.make_city_dict(results[0]))
     else:
-        return "cities, {}".format(geonameid)
+        abort(404)
